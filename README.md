@@ -233,10 +233,4 @@ Temp: 19.1 C  |  Hum: 85.3 %
 Temp: 19.2 C  |  Hum: 87.0 %
 ```
 
----
 
-## Author
-
-**Ioannis Delivasilis** — [@giannisdeliv](https://github.com/giannisdeliv)  
-ECE Graduate, Democritus University of Thrace  
-Targeting embedded firmware engineering roles in Germany
