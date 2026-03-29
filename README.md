@@ -35,15 +35,21 @@ Pin 4 (GND)      CN6 PIN7 (GND)         Ground
 
 ### Clock
 Source: HSI (16MHz internal oscillator)
+
 PLL configured for **HCLK = 84MHz** (maximum for F401RE)
+
 APB1 = 42MHz, APB2 = 84MHz
 
 ### USART2 — Virtual COM Port
 
 Mode=Asynchronous 
+
 Baud Rate=115200 
+
 Word Length=8 bit 
+
 Parity=None 
+
 Stop Bits= 1 
 
 USART2 TX/RX are mapped to PA2/PA3, which are internally wired to the ST-Link on the Nucleo board — no extra hardware needed.
@@ -51,8 +57,11 @@ USART2 TX/RX are mapped to PA2/PA3, which are internally wired to the ST-Link on
 ### PA6 — DHT22 Data Pin
 
 Mode:GPIO Output Push-Pull 
+
 Pull:No pull-up / No pull-down 
+
 Speed:Very High 
+
 Initial level:High
 
 Pull-up/pull-down is set to None because an external 1kΩ pull-up is used. Speed is set to Very High because the DHT22 protocol requires tight microsecond-level timing.
@@ -60,7 +69,9 @@ Pull-up/pull-down is set to None because an external 1kΩ pull-up is used. Speed
 ### IWDG — Independent Watchdog
 
 Clock source:LSI (~32kHz) 
+
 Prescaler: ~1kHz tick (1 tick = 1ms) 
+
 Reload value: 3000 -> 3 second timeout
 
 The DHT22 is sampled every 2 seconds. The IWDG is refreshed before and after each `HAL_Delay(2000)`, giving a comfortable margin. 
