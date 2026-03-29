@@ -1,0 +1,30 @@
+# STM32CubeIDE build artifacts
+Debug/
+Release/
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.d
+*.o
+*.su
+*.cyclo
+
+# STM32CubeIDE project settings (machine-specific)
+.settings/
+.cproject
+.project
+
+# CubeMX backup files
+*.bak
+
+# IDE metadata
+.metadata/
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# macOS
+.DS_Store
