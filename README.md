@@ -5,10 +5,14 @@ Bare-metal temperature and humidity sensing project using the STM32 Nucleo-F401R
 ## Hardware
 
 
-MCU Board-> NUCLEO-F401RE (STM32F401RE, Cortex-M4 @ 84MHz)|
+MCU Board-> NUCLEO-F401RE (STM32F401RE, Cortex-M4 @ 84MHz)
+
 Sensor-> DHT22 
+
 Pull-up resistor -> 1kΩ (Data line → 3.3V) 
+
 IDE -> STM32CubeIDE 1.19 
+
 HAL Version -> STM32CubeF4
 
 ### Wiring (Arduino headers)
