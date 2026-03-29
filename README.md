@@ -19,8 +19,11 @@ HAL Version -> STM32CubeF4
 
 
 Pin 1 (VDD)      CN6 PIN3 (3.3V)        Power supply
+
 Pin 2 (Data)     CN5 PIN6 (PA6 / D12)   Data line + pull-up 
+
 Pin 3 (NC)               —              Not connected 
+
 Pin 4 (GND)      CN6 PIN7 (GND)         Ground 
 
 *The pull-up resistor (1kΩ) must be connected between the Data pin and 3.3V.  
