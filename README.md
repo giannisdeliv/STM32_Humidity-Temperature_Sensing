@@ -237,18 +237,8 @@ while (1)
 
 The IWDG is refreshed both before and after the 2-second delay to ensure the 3-second window is never exceeded during normal operation.
 
----
 
-## Serial Monitor Output
 
-Connect via Tera Term, PuTTY, or any Serial Monitor at **115200 baud, 8N1**.
 
-```
-DHT22 Bare-metal + IWDG demo
-Temp: 18.8 C  |  Hum: 73.4 %
-Temp: 18.8 C  |  Hum: 73.3 %
-Temp: 19.1 C  |  Hum: 85.3 %
-Temp: 19.2 C  |  Hum: 87.0 %
-```
 
 
