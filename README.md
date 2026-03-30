@@ -106,26 +106,26 @@ STM32_TempHum_sensing/
 
 The DHT22 driver is implemented as a standalone module (`dht22.h` / `dht22.c`) following standard embedded C conventions:
 
-- **Public API** declared in `dht22.h` — only two functions exposed
-- **Private helpers** (`DWT_Init`, `delay_us`, `pin_output`, `pin_input`, `pin_read`) declared `static` in `dht22.c` — invisible outside the module
+- **DHT22_Call** declared in `dht22.h` — only two functions exposed
+- **PIN helpers** (`DWT_Init`, `delay_us`, `pin_output`, `pin_input`, `pin_read`) declared `static` in `dht22.c` — invisible outside the module
 - **`DHT22_Status_t` enum** for return codes instead of raw integers
 - **`DHT22_Data_t` struct** groups temperature and humidity into a single object passed by pointer
 
 ```c
-/* Public API */
+/* DHT22_Call */
 void           DHT22_Init(void);
 DHT22_Status_t DHT22_Read(DHT22_Data_t *data);
 ```
 
 ### Microsecond Timing — DWT Cycle Counter
 
-`HAL_Delay()` has 1ms resolution — too coarse for the DHT22 protocol which requires delays of 15–80μs. Instead, the driver uses the **DWT (Data Watchpoint and Trace) cycle counter**, a hardware register in the Cortex-M4 core that increments every CPU clock cycle.
+`HAL_Delay()` has 1ms resolution. That's not suitable for the DHT22 protocol which requires delays of 15–80μs. Instead, twe use the **DWT (Data Watchpoint and Trace) cycle counter**, a hardware register in the Cortex-M4 core that increments every CPU clock cycle.
 
 ```c
 static void delay_us(uint32_t us)
 {
     uint32_t start = DWT->CYCCNT;
-    uint32_t ticks = us * (SystemCoreClock / 1000000U); // 84 cycles = 1μs @ 84MHz
+    uint32_t ticks = us * (SystemCoreClock / 1000000U); // 84 cycles = 1μs -> 84MHz
     while ((DWT->CYCCNT - start) < ticks);
 }
 ```
@@ -155,13 +155,17 @@ The DHT22 uses a proprietary 1-wire protocol. Every measurement follows this seq
 
 ### Data Format (40 bits = 5 bytes)
 
-| Byte | Content |
-|---|---|
-| 0 | Humidity integer part (MSB) |
-| 1 | Humidity decimal part (LSB) |
-| 2 | Temperature integer part (MSB) + sign bit (bit7) |
-| 3 | Temperature decimal part (LSB) |
-| 4 | Checksum = byte0 + byte1 + byte2 + byte3 |
+
+
+Byte 0 = Humidity integer part (MSB) 
+
+Byte 1 = Humidity decimal part (LSB) 
+
+Byte 2 = Temperature integer part (MSB) + sign bit (bit7) 
+
+Byte 3 = Temperature decimal part (LSB) 
+
+Byte 4-Checksum = byte0 + byte1 + byte2 + byte3 
 
 ### Decoding
 
@@ -176,7 +180,7 @@ if (raw[2] & 0x80)                      // bit7 = sign bit
     data->temperature = -data->temperature;
 ```
 
-The sensor uses **sign-magnitude** encoding (not two's complement) for negative temperatures — bit7 of byte2 indicates the sign.
+The DHT22 sensor uses **sign-magnitude** encoding (not two's complement) for negative temperatures — bit7 of byte2 indicates the sign.
 
 ### Checksum
 
@@ -201,7 +205,7 @@ int __io_putchar(int ch)
 }
 ```
 
-Float formatting support is enabled by adding `-u _printf_float` to the linker flags (`Project → Properties → C/C++ Build → Settings → MCU GCC Linker → Miscellaneous`).
+In my IDE verison, float formatting support is enabled by adding `-u _printf_float` to the linker flags (`Project → Properties → C/C++ Build → Settings → MCU GCC Linker → Miscellaneous`).
 
 ---
 
@@ -236,9 +240,3 @@ while (1)
 ```
 
 The IWDG is refreshed both before and after the 2-second delay to ensure the 3-second window is never exceeded during normal operation.
-
-
-
-
-
-
